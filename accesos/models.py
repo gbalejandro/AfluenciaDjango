@@ -10,6 +10,7 @@ class Empleado(models.Model):
     id = models.PositiveIntegerField(primary_key=True)
     nombre = models.CharField(max_length=40)
     apellidos = models.CharField(max_length=70)
+    imagen = models.ImageField(upload_to='empleados',blank=True,null=True)
 
     def __str__(self):
         return '{} {}'.format(self.nombre,self.apellidos)
@@ -47,7 +48,7 @@ class Mensaje(models.Model):
     fechainicio =  models.DateField()
     fechafin = models.DateField()
     texto = models.CharField(max_length=250)
-    #color = models.CharField(max_length=10,choices=COLORESMENSAJE,default='primary')
+    color = models.CharField(max_length=10,default='primary')
     visualizacion = models.PositiveIntegerField(default=0)
 
     def __str__(self):
@@ -78,7 +79,7 @@ class Registro(models.Model):
 class Configuraciones(models.Model):
     hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE)
     zona = models.ForeignKey(AccesosHotel,on_delete=models.CASCADE)
-    segundosmensaje = models.PositiveIntegerField(verbose_name='Segundos Mensaje') 
+    segundosmensaje = models.PositiveIntegerField(default=3, verbose_name='Segundos Mensaje') 
 
     def __str__(self):
         return '{} - {}'.format(self.hotel.descripcion, self.zona)
