@@ -1,0 +1,32 @@
+{% extends '../base.html' %}
+
+
+{% block breadcrumb %}
+
+        <li class="breadcrumb-item active">Hoteles</li>
+
+{% endblock %}
+
+
+{% block content %}
+
+        <div class="row">
+        {% for hotel in Hotel_list %}
+
+                <div class="col-lg-3 col-xl-3 col-md-6 col-sm-12 ">
+                    <div class="card" style="width: 15rem;" id="Corp{{ hotel.id }}">
+                        <img class="card-img-top" src="{{ hotel.logo}}" alt="">
+                            <div class="card-body">
+                                <h4 class="card-title">{{ hotel.descripcion }}</h4>
+                                <p class="card-text"></p>
+                            </div>
+                         <a href="{% url 'listazonasaf' hotel.pk %}" class="btn btn-primary">Seleccionar</a>
+                    </div>
+                </div>
+
+        {% endfor %}
+    </div>
+
+
+{% endblock %}
+

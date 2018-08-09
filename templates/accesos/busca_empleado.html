@@ -1,0 +1,178 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+
+    <link rel="stylesheet" href="{% static 'css/jquery-ui.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/jquery-ui.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+  <style>
+table {
+    border: 0px solid #ccc;
+    border-collapse: collapse;
+    margin: 0;
+    padding: 0;
+    width: 300px;
+    table-layout: fixed;
+    margin-left:auto;
+      margin-right:auto;
+
+}
+table td {
+    padding: .625em;
+    text-align: center;
+}
+</style>
+
+<script>
+
+    var empid;
+    $(document).ready(function(){
+
+    $("#botonok").hide();
+
+    });
+
+    function ClickNum(id) {
+        x=$("#Visor")[0].value;
+        valor = id.innerHTML;
+        if (valor == 'Borrar') {
+            $("#botonok").hide();
+            $("#nombre").hide();
+
+            x.value='';
+        } else {
+            x = document.getElementById('Visor');
+            x.value = x.value + valor;
+            //$("#Visor")[0].value + valor;
+
+        }
+    }
+
+    function Enviar() {
+        console.log(location.hostname);
+        x=$("#Visor")[0].value;
+        var url = 'http://'+location.hostname+':8000/empleado/'+x;
+        $.getJSON(url, function(data) {
+
+                $('#nombre').html(data.nombre + ' '+data.apellidos);
+
+                if ( $("#nombre").html != '') {
+                    $("#botonok").show();
+                    $("#nombre").show();
+                    empid = x;
+                    console.log('Empleado:'+empid);
+                }
+            });
+
+        $("#Visor")[0].value = '';
+
+    }
+
+    function OkClick() {
+            console.log(location.hostname);
+            console.log('http://'+location.hostname+':8000/registro/'+ empid);
+
+            window.location.replace('http://'+location.hostname+':8000/registro/'+ empid);
+
+        };
+
+    function Borrar() {
+        $("#Visor")[0].value='';
+
+
+    }
+</script>
+
+
+  </head>
+  <body class="bg">
+
+
+ <div class="container-fluid">
+        <ol class="breadcrumb my-4">
+            <li class="breadcrumb-item">{{ request.session.nombreHotel }}</li>
+            <li class="breadcrumb-item active">{{ request.session.nombrezona }}</li>
+        </ol>
+
+
+
+
+  <div class="row">
+    <div class="col-4"></div>
+    <div class="col-4 text-center">
+        <input type="text" name="codigo" id="Visor" class="form-control tel" value="">
+
+    </div>
+  </div>
+    <div class="row">
+    <div class="col-3"></div>
+    <div class="col-6">
+
+    </div>
+    </div>
+ </div>
+
+  <script>
+
+      $.fn.enterKey = function (fnc) {
+        return this.each(function () {
+            $(this).keypress(function (ev) {
+                var keycode = (ev.keyCode ? ev.keyCode : ev.which);
+                if (keycode == '13') {
+                    fnc.call(this, ev);
+                }
+            })
+        })
+    }
+
+      setInterval( foco, 2000 );
+
+      $( document ).ready(function() {
+
+            $("input").focus();
+    });
+
+
+
+    function foco(){
+              $("input").focus();
+          }
+
+
+      $("input").focusin(
+          function () {
+              $("input").val('');
+
+          }
+      )
+      $("input").focusout(
+          function () {
+         }
+      )
+
+      $("input").enterKey(function () {
+
+          var empid =  $("input").val();
+          if (empid.length > 5){
+          window.location.replace('http://'+location.hostname+':8000/registro/'+ empid);
+          } else {
+              $("input").focus();
+          }
+
+
+      })
+
+
+  </script>
+
+  </body>
+</html>
