@@ -17,7 +17,9 @@ from django.conf.urls import url
 from django.contrib import admin
 admin.autodiscover()
 from django.urls import path
-
+from django.conf import settings
+from django.contrib.staticfiles.urls import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from accesos import views
 
 urlpatterns = [
@@ -25,6 +27,17 @@ urlpatterns = [
     path('zona/<int:hotelid>', views.Zonaslist, name='listazonasaf'),
     path('hoteles/', views.HotelesList, name='listahotelesaf'),
     path('teclado/<int:zonaid>', views.Teclado, name='tecladoaf'),
+    #path('empleado/<int:empleadoid>',views.BuscaEmpleado, name='empleadocc'),
     path('registro/<empleadoid>', views.Registra,name='registroaf'),
-    path('admin/', admin.site.urls),  
+    path('admin/', admin.site.urls),
+    #url(r'\^media/(?P<path>.\*)\$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, }),  
 ]
+
+urlpatterns += staticfiles_urlpatterns()
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# if settings.DEBUG:
+#     urlpatterns += patterns('', 
+#     	url(r'\^media/(?P<path>.\*)\$', 'django.views.static.serve', 
+#     		{'document_root': settings.MEDIA_ROOT, }),
+# )

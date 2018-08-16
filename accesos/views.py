@@ -7,6 +7,9 @@ from datetime import date
 def HotelesList(request):
     conf = Configuraciones.objects.first()
     if conf:
+        c = AccesosHotel.objects.filter(hotel=conf.hotel_id)
+        if c:
+            request.session['nombreHotel'] = c[0].hotel.descripcion
         request.session['zonaid'] = conf.zona_id
         request.session['nombrezona'] = AccesosHotel.objects.get(pk=conf.zona_id).descripcion
         return render(request,'accesos/busca_empleado.html')
@@ -68,9 +71,12 @@ def Registra(request,empleadoid):
 
         Registro(empleado=emp,zona_id=request.session['zonaid'],tipo=tipo).save()
 
+        tiempo = Configuraciones.objects.first()
 
-        return render(request,'accesos/registrado.html',context={'empleado':emp,'mensaje':mensaje})
+        return render(request,'accesos/registrado.html',context={'empleado':emp,'mensaje':mensaje,'tiempo':tiempo})
         #else:
             #return render(request,'accesos/noacceso.html')
     else:
-        return render(request,'accesos/noregistrado.html')
+        tiempo = Configuraciones.objects.first()
+
+        return render(request,'accesos/noregistrado.html',context={'tiempo':tiempo})

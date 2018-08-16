@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="refresh" content="3;URL='{% url 'tecladoaf' request.session.zonaid %}'" />
+    <meta http-equiv="refresh" content="{{tiempo.segundosmensaje}};URL='{% url 'tecladoaf' request.session.zonaid %}'" />
 
       <title>{% block title %}{% endblock %}</title>
 
@@ -16,19 +16,7 @@
 
     <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
     <script src="{% static 'js/jquery-ui.min.js' %}"></script>
-    <script src="{% static 'js/popper.js' %}"></script>
-
-    <script src={% static 'js/Chart.min.js' %}></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap-table.js' %}"></script>
-    <script src="{% static 'js/bootstrap-table-es-SP.js' %}"></script>
-
-    <link rel="stylesheet" type="text/css" href="{% static 'css/datatables.min.css'%}"/>
-    <script type="text/javascript" src="{% static 'js/datatables.min.js' %}"></script>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/buttons.dataTables.min.css'%}"/>
-    <script type="text/javascript" src="{% static 'js/dataTables.buttons.min.js'%}"></script>
-
-
   </head>
   <body class="bg">
 
